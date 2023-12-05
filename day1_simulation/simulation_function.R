@@ -30,6 +30,14 @@ simulate_slugs_and_soybeans <- function(n, min_slugs_observed, max_slugs_observe
   # lm() creates a linear model 
   summary(fit1 <- lm(soybean_density ~ slugs_per_trap))
   
+  # save important outputs
+  # R-squared
+  R2 <- summary(fit1)$r.squared
+  # intercept term
+  estimate_intercept <- summary(fit1)$coefficients[1,1]
+  # effect of slug increase
+  estimate_effect_of_slug_increase <- summary(fit1)$coefficients[2,1]
+  
   ##------------------------------------------------------------------------------
   # visualize the model
   
@@ -74,6 +82,8 @@ simulate_slugs_and_soybeans <- function(n, min_slugs_observed, max_slugs_observe
   ## --------------------------------------------------
   # Return stuff
   return(list(
-    
+    R2 = R2,
+    estimate_intercept = estimate_intercept,
+    estimate_effect_of_slug_increase = estimate_effect_of_slug_increase
   ))
 }

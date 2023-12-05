@@ -6,7 +6,7 @@
 # Part 1: Simulate slug density and soybean plant density and fit a linear regression model to the data
 
 ##------------------------------------------------------------------------------
-# 1.1 Simulate an association between the independent and dependent variables
+# 1.1 Simulate slug counts and soybean plant densities for a sample of field experiment plots
 
 # set the random number generator so that we all get the same results
 set.seed(11) 
@@ -52,6 +52,14 @@ mydata <- data.frame(slugs_per_trap, soybean_density)
 # lm() creates a linear model 
 summary(fit1 <- lm(soybean_density ~ slugs_per_trap))
 
+# save important outputs
+# R-squared
+R2 <- summary(fit1)$r.squared
+# intercept term
+estimate_intercept <- summary(fit1)$coefficients[1,1]
+# effect of slug increase
+estimate_effect_of_slug_increase <- summary(fit1)$coefficients[2,1]
+
 ##------------------------------------------------------------------------------
 # 1.3 Visualize the association
 
@@ -77,11 +85,11 @@ pred <- predict(fit1, newdata, interval = 'confidence')
 plot(x = mydata$slugs_per_trap, # independent variable
      y = mydata$soybean_density, # dependent variable
      cex = 1.75, pch = 21, bg = 'gray', # size, shape, and colour of the data points
-     xlab = "Slugs (#/trap)",
-     ylab = "Soybean plants (10,000/ha)", 
-     frame = FALSE,
-     xlim = c(min_slugs_observed, max_slugs_observed),
-     ylim = c(0, 30)
+     xlab = "Slugs (#/trap)", # x-axis title
+     ylab = "Soybean plants (10,000/ha)", # y-axis title
+     frame = FALSE, # remove frame
+     xlim = c(min_slugs_observed, max_slugs_observed), # x-axis limits (only plot across the range of our data)
+     ylim = c(0, 30) # y-axis limits
 )
 
 # plot the predicted mean response for a given number of slugs per trap
@@ -94,6 +102,7 @@ lines(pred[,3] ~ newdata$slugs_per_trap, col = 'blue', lty = 2, lwd = 2)
 expected_means <- intercept + effect_of_slug_increase * newdata$slugs_per_trap
 lines(expected_means ~ newdata$slugs_per_trap, col = 'red', lty = 2, lwd = 2)
 
+
 # You could also remake the plot using the newer, popular ggplot tools
 # the confidence bands are automatically generated for us and we don't have to do it ourselves
 #library("ggplot2")
@@ -101,6 +110,10 @@ lines(expected_means ~ newdata$slugs_per_trap, col = 'red', lty = 2, lwd = 2)
 #  geom_point() +
 #  stat_smooth(method = lm))
 
+# Question 1:
+# According to your model, what is the effect of slugs on soybean plant density?
+# Question 2:
+# What is the R-squared value for your linear model? What does this value mean
 
 ##------------------------------------------------------------------------------
 # Part 2: vary the slope, sample size, and random variability and see how the results change
@@ -119,6 +132,10 @@ my_simulated_data <- simulate_slugs_and_soybeans(n=12, min_slugs_observed=2, max
                                    intercept=25, effect_of_slug_increase=-2, sd=3,
                                    slug_interval=0.5)
 
+(R2 <- my_simulated_data$R2)
+(estimate_intercept <- my_simulated_data$estimate_intercept)
+(estimate_effect_of_slug_increase<- my_simulated_data$estimate_effect_of_slug_increase)
+
 ##------------------------------------------------------------------------------
 # 2.2 Decrease the slope (b increased from -2 to -0.5)
 
@@ -126,6 +143,10 @@ set.seed(11)
 my_simulated_data <- simulate_slugs_and_soybeans(n=12, min_slugs_observed=2, max_slugs_observed=9, 
                                    intercept=25, effect_of_slug_increase=-0.5, sd=3,
                                    slug_interval=0.5)
+
+(R2 <- my_simulated_data$R2)
+(estimate_intercept <- my_simulated_data$estimate_intercept)
+(estimate_effect_of_slug_increase<- my_simulated_data$estimate_effect_of_slug_increase)
 
 # questions
 
@@ -137,7 +158,11 @@ my_simulated_data <- simulate_slugs_and_soybeans(n=100, min_slugs_observed=2, ma
                                    intercept=25, effect_of_slug_increase=-2, sd=3,
                                    slug_interval=0.5)
 
-# questions: confidence interval changes.. does the R2 change? (it shouldn't)
+(R2 <- my_simulated_data$R2)
+(estimate_intercept <- my_simulated_data$estimate_intercept)
+(estimate_effect_of_slug_increase<- my_simulated_data$estimate_effect_of_slug_increase)
+
+# questions: 
 
 #
 ##------------------------------------------------------------------------------
@@ -148,12 +173,20 @@ my_simulated_data <- simulate_slugs_and_soybeans(n=4, min_slugs_observed=2, max_
                                                  intercept=25, effect_of_slug_increase=-2, sd=3,
                                                  slug_interval=0.5)
 
-# questions: confidence interval changes.. does the R2 change? (it shouldn't)
+(R2 <- my_simulated_data$R2)
+(estimate_intercept <- my_simulated_data$estimate_intercept)
+(estimate_effect_of_slug_increase<- my_simulated_data$estimate_effect_of_slug_increase)
+
+# questions: 
 
 ##------------------------------------------------------------------------------
-# 2.5 Increase random variation in the outcome (sd increased from 3 to 4)
+# 2.5 Increase random variation in the outcome (sd increased from 3 to 5)
 
 set.seed(11)
 my_simulated_data <- simulate_slugs_and_soybeans(n=12, min_slugs_observed=2, max_slugs_observed=9, 
-                                   intercept=25, effect_of_slug_increase=-2, sd=4,
+                                   intercept=25, effect_of_slug_increase=-2, sd=5,
                                    slug_interval=0.5)
+
+(R2 <- my_simulated_data$R2)
+(estimate_intercept <- my_simulated_data$estimate_intercept)
+(estimate_effect_of_slug_increase<- my_simulated_data$estimate_effect_of_slug_increase)
