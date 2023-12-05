@@ -141,10 +141,10 @@ my_simulated_data <- simulate_slugs_and_soybeans(n=100, min_slugs_observed=2, ma
 
 #
 ##------------------------------------------------------------------------------
-# 2.4 Decrease the sample size (n increased from 12 to 6 plots)
+# 2.4 Decrease the sample size (n increased from 12 to 4 plots)
 
 set.seed(11)
-my_simulated_data <- simulate_slugs_and_soybeans(n=6, min_slugs_observed=2, max_slugs_observed=9, 
+my_simulated_data <- simulate_slugs_and_soybeans(n=4, min_slugs_observed=2, max_slugs_observed=9, 
                                                  intercept=25, effect_of_slug_increase=-2, sd=3,
                                                  slug_interval=0.5)
 
