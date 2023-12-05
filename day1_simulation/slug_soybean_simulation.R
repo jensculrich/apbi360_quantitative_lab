@@ -102,7 +102,6 @@ lines(pred[,3] ~ newdata$slugs_per_trap, col = 'blue', lty = 2, lwd = 2)
 expected_means <- intercept + effect_of_slug_increase * newdata$slugs_per_trap
 lines(expected_means ~ newdata$slugs_per_trap, col = 'red', lty = 2, lwd = 2)
 
-
 # You could also remake the plot using the newer, popular ggplot tools
 # the confidence bands are automatically generated for us and we don't have to do it ourselves
 #library("ggplot2")
@@ -113,7 +112,12 @@ lines(expected_means ~ newdata$slugs_per_trap, col = 'red', lty = 2, lwd = 2)
 # Question 1:
 # According to your model, what is the effect of slugs on soybean plant density?
 # Question 2:
-# What is the R-squared value for your linear model? What does this value mean
+# How does the estimated effect of slugs on soybeans compare to the slope value used to simulate the data?
+# (Hint: how does the red dashed line in your plot compare to the black solid line in the plot?)
+# Question 3:
+# Something about the confidence interval?
+# Question 2:
+# What is the R-squared value for your linear model? Something about the interpretation?
 
 ##------------------------------------------------------------------------------
 # Part 2: vary the slope, sample size, and random variability and see how the results change
