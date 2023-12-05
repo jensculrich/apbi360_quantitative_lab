@@ -6,7 +6,7 @@
 # Part 1: Simulate slug density and soybean plant density and fit a linear regression model to the data
 
 ##------------------------------------------------------------------------------
-# simulate an association between an independent and dependent variable
+# 1.1 Simulate an association between the independent and dependent variables
 
 # set the random number generator so that we all get the same results
 set.seed(11) 
@@ -46,14 +46,14 @@ mydata <- data.frame(slugs_per_trap, soybean_density)
 plot(mydata$slugs_per_trap, mydata$soybean_density)
 
 ##------------------------------------------------------------------------------
-# model the association
+# 1.2 Quantify the association using a linear regression model
 
 # fit a linear regression model to our data
 # lm() creates a linear model 
 summary(fit1 <- lm(soybean_density ~ slugs_per_trap))
 
 ##------------------------------------------------------------------------------
-# visualize the model
+# 1.3 Visualize the association
 
 # now plot the fit (with confidence intervals)
 # first we need to create some new data
@@ -104,6 +104,9 @@ lines(expected_means ~ newdata$slugs_per_trap, col = 'red', lty = 2, lwd = 2)
 
 ##------------------------------------------------------------------------------
 # Part 2: vary the slope, sample size, and random variability and see how the results change
+
+##------------------------------------------------------------------------------
+# 2.1 Create a function that enables easy adjustment of the simulation settings
 
 # first create a function to easily reproduce new data sets
 # press ctrl+enter at the first line of the function to save the function in your environment
@@ -192,7 +195,7 @@ my_simulated_data <- simulate_slugs_and_soybeans(n=12, min_slugs_observed=2, max
                                    slug_interval=0.5)
 
 ##------------------------------------------------------------------------------
-# Part 2.1: Decrease the slope (b increased from -2 to -0.5)
+# 2.2 Decrease the slope (b increased from -2 to -0.5)
 
 set.seed(11)
 my_simulated_data <- simulate_slugs_and_soybeans(n=12, min_slugs_observed=2, max_slugs_observed=9, 
@@ -202,7 +205,7 @@ my_simulated_data <- simulate_slugs_and_soybeans(n=12, min_slugs_observed=2, max
 # questions
 
 ##------------------------------------------------------------------------------
-# Part 2.2: Increase the sample size (n increased from 12 to 100 plots)
+# 2.3 Increase the sample size (n increased from 12 to 100 plots)
 
 set.seed(11)
 my_simulated_data <- simulate_slugs_and_soybeans(n=100, min_slugs_observed=2, max_slugs_observed=9, 
@@ -213,7 +216,7 @@ my_simulated_data <- simulate_slugs_and_soybeans(n=100, min_slugs_observed=2, ma
 
 #
 ##------------------------------------------------------------------------------
-# Part 2.3: Decrease the sample size (n increased from 12 to 6 plots)
+# 2.4 Decrease the sample size (n increased from 12 to 6 plots)
 
 set.seed(11)
 my_simulated_data <- simulate_slugs_and_soybeans(n=6, min_slugs_observed=2, max_slugs_observed=9, 
@@ -223,7 +226,7 @@ my_simulated_data <- simulate_slugs_and_soybeans(n=6, min_slugs_observed=2, max_
 # questions: confidence interval changes.. does the R2 change? (it shouldn't)
 
 ##------------------------------------------------------------------------------
-# Part 2.4: Increase random variation in the outcome (sd increased from 3 to 4)
+# 2.5 Increase random variation in the outcome (sd increased from 3 to 4)
 
 set.seed(11)
 my_simulated_data <- simulate_slugs_and_soybeans(n=12, min_slugs_observed=2, max_slugs_observed=9, 
