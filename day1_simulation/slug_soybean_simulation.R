@@ -30,15 +30,15 @@ effect_of_slug_increase <- -2 # negative values indicate a decrease in dependent
 sd <- 3
 
 # simulate some slug trap data (independent variable), for n plots, ranging from lows to highs seen in the field experiment
-# runif()
+# runif() # more explanation here of what this does
 slugs_per_trap <- runif(n=n, min=min_slugs_observed, max=max_slugs_observed)
 
 # simulate associated outcome of soybean plant density conditional (dependent variable) on slugs per trape
-# rnorm()
+# rnorm() # more explanation here of what this does
 linear_model <- (intercept + (effect_of_slug_increase * slugs_per_trap))
 soybean_density <- rnorm(n=n, mean=linear_model, sd=sd)
 
-# join the data into a 'data frame' structure
+# join the data of slugs and soybeans into a single 'data frame' structure
 mydata <- data.frame(slugs_per_trap, soybean_density)
 
 # visualize the data
@@ -113,14 +113,17 @@ lines(expected_means ~ newdata$slugs_per_trap, col = 'red', lty = 2, lwd = 2)
 # According to your model, what is the effect of slugs on soybean plant density?
 # Question 2:
 # How does the estimated effect of slugs on soybeans compare to the slope value used to simulate the data?
-# (Hint: how does the red dashed line in your plot compare to the black solid line in the plot?)
+# (Hint: look at the parameter estimatese from model summary OR 
+# how does the red dashed line in your plot compare to the black solid line in the plot?)
 # Question 3:
 # Something about the confidence interval?
-# Question 2:
-# What is the R-squared value for your linear model? Something about the interpretation?
+# Question 4:
+# What is the R-squared value for your linear model? Some question about the interpretation?
 
 ##------------------------------------------------------------------------------
 # Part 2: vary the slope, sample size, and random variability and see how the results change
+
+# Overall goal, understand how the quantitative model interprets a data set
 
 ##------------------------------------------------------------------------------
 # 2.1 Point our environment towards a function that wraps all of the above code.
