@@ -290,4 +290,133 @@ pred <- predict(object=fit1, newdata, interval = 'confidence')
 
 ### Day 2 - Part 1: Adjust the simulation settings
 
+First, we will try adjusting the simulation settings. We'll take a look at how this effects the our qualitative and quantitative assessments of the association between slugs and soybeans
+
+#### Download the simulation function
+To make reproduction of the simulation easy, we've wrapped all of the simulation code from Day 1 into a function stored in a .R file. This will allow us to tweak the simulation settings and instantly see the consequences on the data and our analysis. Save the file "simulation_function.R" in your working directory. Make sure you do not change the name of the file.
+
+#### Direct R towards the simulation function
+
+source() points the environment to a different file
+
+The source() function will point your R session towards a file in your directory. Starting the file argument with "./" will place tell R to look in your current working directory.
+
+
+```{r}
+# the "simulation_function.R" file holds the simulation function.
+source(file="./simulation_function.R")
+```
+
+To make sure that you are properly connected to the simulation function. Go ahead and recreate the figure that we made as a class by calling the simulate_slugs_and_soybeans() function held in your new file, using the same simulation settings that we used for the simulation in Day 1.
+
+```{r}
+# Now we can just run the following line of code to regenerate our original plot!
+set.seed(19)
+my_simulated_data <- simulate_slugs_and_soybeans(n=12, 
+                                   min_slugs_observed=2, max_slugs_observed=9, 
+                                   intercept=25, effect_of_slug_increase=-2, sd=3,
+                                   slug_interval=0.5, n_reps=1)
+
+print(paste0("intercept = ", signif(my_simulated_data$estimate_intercept, digits=3)))
+print(paste0("slope = ", signif(my_simulated_data$estimate_slope, digits=3)))
+print(paste0("R-squared = ", signif(my_simulated_data$R2,3)))
+```
+
+#### Reconduct the simulation
+
+Next we will adjust our simulation settings to see how this changes the visual spread of the data that emerge, the results of our statistical analysis and our conclusions about the hypothesis introduced on Day 1. 
+
+Using the simulation function, alter the intercept and/or the slope. For example, I've chosen a new intercept of 17 and a slope of 1. Feel free to choose any values that you think you might realistically observe in a slug - soybean experiment! Rerun the simulation 1 time (n_reps=1).
+
+```{r}
+# Now we can just run the following line of code to regenerate our original plot!
+set.seed(19)
+my_simulated_data <- simulate_slugs_and_soybeans(n=12, 
+                                   min_slugs_observed=2, max_slugs_observed=9, 
+                                   intercept=17, effect_of_slug_increase=1, sd=3,
+                                   slug_interval=0.5, n_reps=1)
+
+print(paste0("intercept = ", signif(my_simulated_data$estimate_intercept, digits=3)))
+print(paste0("slope = ", signif(my_simulated_data$estimate_slope, digits=3)))
+print(paste0("R-squared = ", signif(my_simulated_data$R2,3)))
+```
+
+**QUESTION 8: Describe your visual interpretation of how the data and association changed after altering the input intercept and slope. Is the true relationship (red line) still captured within the confidence interval associated with your statistical model's estimates for the intercept and slope (blue lines). Do the results of your analysis still support the hypothesis that... Copy and paste the plot WITH THE SIMULATION PARAMETER VALUES THAT YOU CHOSE at the end of your response to this question**
+
+Now return to our original intercept and slope values and then decrease the precision (increase the standard deviation) of our experiment. Change the sd from 3 to 5 and rerun the simulation 1 time (n_reps=1).
+
+```{r}
+# Now we can just run the following line of code to regenerate our original plot!
+set.seed(19)
+my_simulated_data <- simulate_slugs_and_soybeans(n=12, 
+                                   min_slugs_observed=2, max_slugs_observed=9, 
+                                   intercept=25, effect_of_slug_increase=-2, sd=5,
+                                   slug_interval=0.5, n_reps = 1)
+
+print(paste0("intercept = ", signif(my_simulated_data$estimate_intercept, digits=3)))
+print(paste0("slope = ", signif(my_simulated_data$estimate_slope, digits=3)))
+```
+
+**QUESTION 8: Describe your visual interpretation of how the data and association changed after altering the precision. Is the true relationship (red line) still captured within the confidence interval associated with your statistical model's estimates for the intercept and slope (blue lines). Do the results of your analysis still support the hypothesis that... Copy and paste the plot WITH THE SIMULATION PARAMETER VALUES THAT YOU CHOSE at the end of your response to this question**
+
+Let's imagine we could conduct the experiment 100 times with higher precision(sd=3) and 100 times (n_reps=100) with lower precision (sd=5). 
+
+```{r}
+# Now we can just run the following line of code to regenerate our original plot!
+set.seed(19)
+my_simulated_data <- simulate_slugs_and_soybeans(n=12, 
+                                   min_slugs_observed=2, max_slugs_observed=9, 
+                                   intercept=25, effect_of_slug_increase=-2, sd=3,
+                                   slug_interval=0.5, n_reps = 100)
+
+my_simulated_data <- simulate_slugs_and_soybeans(n=12, 
+                                   min_slugs_observed=2, max_slugs_observed=9, 
+                                   intercept=25, effect_of_slug_increase=-2, sd=5,
+                                   slug_interval=0.5, n_reps = 100)
+```
+
+
+**QUESTION 8: Reset the slope and then change the sd to a new value and rerun the simulation. Again describe your visual interpretation of how the data and association changed. Then take a look at your statistical model. Change in intercept and slope... confidence interval. Do the results of the analysis still support the hypothesis that... Copy and paste the plot with the simulation parameter values included at the end of your response **
+
+```{r}
+# Now we can just run the following line of code to regenerate our original plot!
+set.seed(19)
+my_simulated_data <- simulate_slugs_and_soybeans(n=12, 
+                                   min_slugs_observed=2, max_slugs_observed=9, 
+                                   intercept=25, effect_of_slug_increase=-2, sd=3,
+                                   slug_interval=0.5, n_reps = 100)
+
+print(paste0("intercept = ", signif(my_simulated_data$estimate_intercept, digits=3)))
+print(paste0("slope = ", signif(my_simulated_data$estimate_slope, digits=3)))
+print(paste0("R-squared = ", signif(my_simulated_data$R2,3)))
+```
+
+**QUESTION 8: Decrease the sample size to from 12 to 6 plots and reproduced your figure, describe your visual interpretation of how the data and association changed. Then take a look at your statistical model. Change in intercept and slope... confidence interval. Do the results of the analysis still support the hypothesis that...**
+
+**QUESTION 9: Reset the sample size to 12 and then change the intercept to a new value and rerun the simulation. Choose any value that you think you might realistically observe in the experiment! Again describe your visual interpretation of how the data and association changed. Then take a look at your statistical model. Change in intercept and slope... confidence interval. Do the results of the analysis still support the hypothesis that... Copy and paste the plot with the simulation parameter values included at the end of your response. **
+
+**QUESTION 10: Reset the intercept and then change the slope to a new value and rerun the simulation. Again describe your visual interpretation of how the data and association changed. Then take a look at your statistical model. Change in intercept and slope... confidence interval. Do the results of the analysis still support the hypothesis that.... Copy and paste the plot with the simulation parameter values included at the end of your response. **
+
+
+
 ### Day 2 - Part 2: Visualize and analyze some collected data
+
+Suppose know that you have a good idea of your system and what kind of data would support your hypothesis, you design and conduct a real field experiment measuring slugs per trap and soybean. 
+
+You've already entered your data into a .csv file using excel. 
+
+Let's first get a summary of the data
+
+```{r}
+```
+
+Finally, we will repeat our analysis that we conducted on the simulated data. 
+
+```{r}
+```
+
+**QUESTION 12: Paste your plot of the data and model predictions. Describe your interpretation of...**
+
+**QUESTION 13: What are the intercept and slope estimates? Describe the biological meaning of these estimates**
+
+**QUESTION 14: Do the data support the hypothesis that...?**
