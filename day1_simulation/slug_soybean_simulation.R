@@ -9,25 +9,25 @@
 # 1.1 Simulate slug counts and soybean plant densities for a sample of field experiment plots
 
 # set the random number generator so that we all get the same results
-set.seed(11) 
+set.seed(12) 
 
 # specify a sample size (how many plots are included in the field experiment)
-n <- 12
+n <- 20
 # specify a minimum number of slugs we might expect to see in a trap (value taken from paper)
-min_slugs_observed = 2
+min_slugs_observed = 1
 # specify a maximum number of slugs we might expect to see in a trap (value taken from paper)
-max_slugs_observed = 9
+max_slugs_observed = 11
 
 # specify an intercept term (density of soybean plants when there are 0 slugs in traps)
-intercept <- 25 # units are in 10,000 plants / hectare
+intercept <- 36 # units are in 10,000 plants / hectare
 
 # specify an effect size of slug density on soybean density
 # an increase in 1 slug/trap should result in decrease in '_' number of soybean plants (10,000/ha)
 # e.g., effect_of_slug_increase = -2 indicates that an increase in 1 slug/trap is associated with a decrease in 20,000 soybean plants/ha
-effect_of_slug_increase <- -2 # negative values indicate a decrease in dependent variable conditional on increase in independent variable
+effect_of_slug_increase <- -2.5 # negative values indicate a decrease in dependent variable conditional on increase in independent variable
 
 # specify precision (how much does the response vary irrespective of the association)
-sd <- 3
+sd <- 4.5
 
 # simulate some slug trap data (independent variable), for n plots, ranging from lows to highs seen in the field experiment
 # runif() # more explanation here of what this does
@@ -40,6 +40,8 @@ soybean_density <- rnorm(n=n, mean=linear_model, sd=sd)
 
 # join the data of slugs and soybeans into a single 'data frame' structure
 mydata <- data.frame(slugs_per_trap, soybean_density)
+
+#write.csv(mydata, "./new_slug_and_soybean_data.csv", row.names=TRUE)
 
 # visualize the data
 # fix the axis labels here
