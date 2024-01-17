@@ -12,6 +12,7 @@ simulate_slugs_and_soybeans <- function(n, min_slugs_observed, max_slugs_observe
     
     intercepts <- vector(length = n_reps)
     slopes <- vector(length = n_reps)
+    R2 <- vector(length = n_reps)
 
     for(i in 1:n_reps){
       
@@ -36,7 +37,7 @@ simulate_slugs_and_soybeans <- function(n, min_slugs_observed, max_slugs_observe
       
       # save important outputs
       # R-squared
-      R2 <- summary(fit1)$r.squared
+      R2[i] <- summary(fit1)$r.squared
       # intercept term
       intercepts[i] <- summary(fit1)$coefficients[1,1]
       # effect of slug increase
@@ -65,6 +66,7 @@ simulate_slugs_and_soybeans <- function(n, min_slugs_observed, max_slugs_observe
     abline(v=mean(slopes), col = 'blue', lwd = 2, lty = 2)
     #legend("topright", legend = c("true value", "mean estimate"), pch = "|", col = c("red", "blue"))
     
+    R2 = mean(R2)
     estimate_intercept = mean(intercepts)
     estimate_slope = mean(slopes)
     sd_intercept = sd(intercepts)
@@ -130,7 +132,7 @@ simulate_slugs_and_soybeans <- function(n, min_slugs_observed, max_slugs_observe
          ylab = "Soybean plants (10,000/ha)", 
          frame = FALSE,
          xlim = c(min_slugs_observed, max_slugs_observed),
-         ylim = c(0, 30),
+         ylim = c(0, 50),
          main = paste0("simulation experiment with intercept = ", intercept, 
                        ",\nslope = ", slope, " and sd = ", sd),
          cex.main = 0.8
@@ -146,7 +148,8 @@ simulate_slugs_and_soybeans <- function(n, min_slugs_observed, max_slugs_observe
     expected_means <- intercept + slope * newdata$slugs_per_trap
     lines(expected_means ~ newdata$slugs_per_trap, col = 'red', lty = 2, lwd = 2)
     
-    legend("topright", legend = c("expected mean", "model-based estimate for mean", "95% CI"), pch = "|", col = c("red", "blue", "black"))
+    legend("topright", legend = c("expected mean", "model-based estimate for mean", "95% CI"), 
+           pch = "|", col = c("red", "black", "blue"))
     
     estimate_intercept = intercept_estimate
     estimate_slope = slope_estimate

@@ -23,15 +23,15 @@ Example concepts taken from:
 
 We will begin by ensuring that R was properly installed and then famaliarize ourselves with an R environment.
 
-Next, we will simulate samples of slug and soybean densities based on a hypothesized relationship between slug herbivory and soybean seedling survival.
+Next, we will simulate samples of slug and soybean densities based on a hypothesized effect of slug herbivory on soybean plant survival.
 
 After that, we will visualize our and analyze our simulated data.
 
 ### Day 2: 
 
-We will begin by adjusting the simulation settings and then explore how this might impact our analysis and conclusions.
+We will adjust the simulation settings and then explore how this might impact our analysis and conclusions.
 
-Finally, you will be given a data set to investigate. Imagine this is data that you or another agroecologist collected from a real study! You will be asked to qualitatively and quantitatively summarize these data and make a conclusion about the relationship between slugs and soybeans. 
+Finally, you will be given a data set to investigate. You will be asked to qualitatively and quantitatively summarize these data and make a conclusion about the relationship between slugs and soybeans. 
 
 ### Lab learning outcomes: 
 
@@ -39,7 +39,7 @@ Following the completion of the lab, students will be able to:
 
 - Open an R programming environment, execute pre-written R scripts and interpret the outputs of these executions.  
 
-- Read a graphical figure that shows a relationship between a continuous predictor (independent) variable and a continuous outcome (dependent) variable.
+- Read a graphical figure that shows a relationship between a continuous independent variable and a continuous dependent variable.
 
 - Describe the biological meaning of the intercept and slope estimates given by a linear regression model.
 
@@ -53,31 +53,25 @@ Following the completion of the lab, students will be able to:
 
 ### Day 1 - Part 1: Familiarize yourself with an R environment
 
-This section will be demonstrated to the class by TA on the projection screen.
+*This section will be demonstrated to the class by TA on the projection screen.*
 
-Before we start with the activity, we will execute a few commands in R to ensure that R is installed properly and that we know how to navigate within an R environment. We will walk through Part 1 as a class with the TA showing navigation and operations on the projection screen. 
+Before we start with the activity, we will execute a few commands in R to ensure that R is installed properly and that we can navigate within an R environment. 
 
-R commands can be executed in two different ways. First, you can paste or type a chunk of code directly into your console and the hit "enter" on your keyboard. Typing or pasting the following print() command in your console and then pressing "enter" should result in your console printing the input text. Entering the simple arithmetic operation below (2 + 2) will return the result of the operation, just as if you were using a calculator.  
+After opening your R environment, R commands can be executed in two different ways. First, you can paste or type a chunk of code directly into the console and then hit "enter". Typing or pasting the print() command in your console and then pressing "enter" should result in your console printing the input text. Entering the simple arithmetic operation below (2 + 2) will return the result of the operation, just as if you were using a calculator.  
 
 ```{r}
 print("slugs eat soybeans")
 2 + 2
 ```
 
-Alternatively, you can create a .R file that holds lines of R script. You can select and then press "ctrl+enter" to execute one or more lines of code. This is a preferable way of interacting with R because it will allow you to save multiple lines of code and re-execute them whenever you like. Try creating a .R file in your working directory and then try the following operations by paste/type the next code chunk into your new .R file.
+Alternatively, you can create an .R file that holds lines of R script. You can select and then press "ctrl+enter" to execute one or more lines of code. This is a preferable way of interacting with R because it will allow you to save multiple lines of code and re-execute them whenever you like. Try creating a .R file in your working directory and then paste/type the previous code chunk into your new .R file. Try calling the print() and addition operations using the select and "ctrl+enter" method. 
 
-We might store the result of some command as a new object, say "x". After entering the first line of code, see if you can find the this new object and it's value within your programming environment. You should see it listed in the top right window pane if you are using RStudio. You can remove objects from the environment using the rm() command.
-
-```{r}
-x <- 2 + 2
-x
-rm(x)
-```
-
-If you wish to reproduce all outputs exactly as those generated by the TA you will need to initialize a random number generator and then run all code in sequence. It's ok if you you don't use the random number initialization, just be aware that your plots and model outputs won't be fully identical to those produced below. 
+We might store the result of some command as a new object, say "new_object". After entering the first line of code, see if you can find the this new object and it's value within your programming environment. You should see it listed in the top right window pane if you are using RStudio. You can remove objects from the environment using the rm() command.
 
 ```{r}
-set.seed(19) 
+new_object <- 2 + 2
+new_object
+rm(new_object)
 ```
 
 \newpage 
@@ -86,11 +80,9 @@ set.seed(19)
 
 #### Introduction 
 
-Suppose we wanted to test the sub-hypothesis presented by Douglas et al. 2015: slugs eat (destroy) soybean seedlings thereby limiting soybean plant density. As in Douglas et al., to test this hypothesis we might collect data on the density of slugs in a sample of soybean plots, predicting a negative relationship between slug density and soybean plant density.
+Suppose we wanted to test the sub-hypothesis presented by Douglas et al. 2015: slugs eat (destroy) soybean seedlings thereby reducing soybean plant density. We might test this hypothesis by collecting data on the number of slugs and the density of soybean plants in a sample of soybean plots, predicting a negative association between slug counts and soybean plant density.
 
-Note to TA: As a class we will draw a diagram of our causal hypothesis. 
-
-Douglas et al. indeed found a negative relationship, supporting this hypothesis (see figure 3c below). We will recreate this experiment ignoring the additional complexity of variation in neonicotinoid pesticides applied to sample plots. Douglas et al. used neonicotinoids to generate variation in slug densities. Here we might imagine a scenario where slug densities vary naturally among soybean plots.
+Douglas et al. indeed found a negative association, supporting the hypothesis (see figure 3c below). We will recreate this experiment ignoring the additional complexity of variation in neonicotinoid pesticides applied to sample plots. Douglas et al. used neonicotinoids to generate variation in slug densities. Here we might imagine a scenario where slug densities vary naturally among soybean plots.
 
 Note to TA: As a class we will look at the fig 3c and identify the intercept, slope and random variation (precision) around the linear predictor. 
 
@@ -98,30 +90,28 @@ Note to TA: As a class we will look at the fig 3c and identify the intercept, sl
 
 #### Simulation
 
-Create some fake date using a simulation procedure. We will know the relationship between slugs and soybeans (because we will define it before generating our fake data!), and so our visualization and statistical models should return the known relationship that we expect. 
+We will create and then visualize/analyze some fake date using a simulation procedure. We will know the association between slugs and soybeans (because we will define it during our simulation), and so our visualization and statistical models should return the association that we expect. 
 
-Start by defining the dimensions of our experiment. Let's use a sample size equivalent to the one used in the study we intend to replicate. Note that anything following a hashtag is ignored by R. Use hashtags to "commented out" your notes or describe your code without interfering with the R session.
+Start by defining the dimensions of the experiment. Let's use a sample size equivalent to the one used in the study we intend to replicate (n = 12 plots). Note that anything following a hashtag is ignored by R. Use hashtags to "comment out" your notes or describe your code without interfering with the R session.
 
 ```{r}
 # specify a sample size (how many plots are included in the field experiment)
 n <- 12
 ```
 
-Next we will need to generate some values for our independent variable, the average density of slugs per trap in each of the *n* sample plots. Here we will use R's runif() command. runif() will take three arguments: (1) *n* or sample size; (2) a minimum value; and (3) a maximum value. Within the range of the minimum and maxium values, runif() will produce *n* random numeric values. The probability of generating any value within the range of the minimum and maximum is equal or "uniform".
+Next we will need to generate some values for our independent variable, the average measure of slugs per trap in each of the *n* sample plots. Here we will use R's runif() command. runif() will take three arguments: (1) *n* or sample size; (2) a minimum value; and (3) a maximum value. Within the range of the minimum and maximum values, runif() will produce *n* random numeric values. The probability of generating any value within the range of the minimum and maximum is equal or "uniform".
 
 ```{r}
 # specify a minimum number of slugs we might expect to see in a trap 
-# (value estimated from fig 3c)
 min_slugs_observed = 2
 # specify a maximum number of slugs we might expect to see in a trap 
-# (value estimated from fig 3c)
 max_slugs_observed = 9
 # simulate some slug trap data (independent variable), for n plots, 
 # ranging from minimum to maximum values seen in the field experiment
 slugs_per_trap <- runif(n=n, min=min_slugs_observed, max=max_slugs_observed)
 ```
 
-Great we have some recorded data on slugs per trap! We could even print or plot these data to see the distribution of slug counts that we "recorded". The counts should be fairly evenly distributed within the range of 2 to 9 slugs given use of the runif() function.
+We have some data on slugs per trap! We could even print or plot these data to see the distribution of slug counts that we "recorded". The counts should be fairly evenly distributed within the range of 2 to 9 slugs given use of the runif() function.
 
 ```{r}
 slugs_per_trap
@@ -134,9 +124,9 @@ hist(slugs_per_trap,
 ```
 
 
-**QUESTION 1: Why don't we have any plots with 11 or 12 slugs per trap?** 
+**QUESTION 1: Why don't we have any plots with 11 or 12 slugs per trap? How might you change the runif() arguments to allow for the possibility of plots with these higher numbers of slugs per trap?** 
 
-Now that we have generated our independent variable data, we can generate dependent data based on a hypothesized relationship. We will assume that there is a linear relationship between slug density and soybean plant density (recall a *y = a + b(x)* slope-intercept equation from linear algebra). To simulate the outcome of such a relationship we will need to specify two terms: (1) an intercept, i.e., how many soybean plants might you expect to see in a plot given that there are zero slugs plot; (2) a slope, i.e., how much do you expect the density of soybean plants to change for every one unit increase in slugs per trap. 
+Now that we've generated our independent variable data, we can generate dependent data based on some association that we define. We will assume that there is a linear relationship between slug density and soybean plant density (recall a *y = a + b(x)* slope-intercept equation from linear algebra where y is the soybean plant density and x is the measure of slugs per trap). To simulate the outcome of such a relationship we will need to specify two parameters: (1) an intercept, i.e., how many soybean plants might you expect to see in a plot given that there are zero slugs plot; (2) a slope, i.e., how much do you expect the density of soybean plants to change for every one unit increase in slugs per trap. 
 
 ```{r}
 # specify an intercept term, i.e.,  
@@ -156,16 +146,21 @@ Finally, we will introduce a stochastic or "random" element to our slug-soybean 
 
 Assuming normally distributed random variation (bell-curve shaped variation), the actual outcomes fall within 1 standard deviation of the expected value (*a + b(x))* ~68% of the time and within 2 standard deviations of the expected value (*a + b(x))* ~95% of the time. E.g. Our intercept of 25, slope of -2 and a measure of 5.5 slugs per trap is expected to yield *25 + -2(5.5) = 14(,000) soybean plants / hectare* on average. **Given a standard deviation of 3**, ~68% of the time plots with 5.5 slugs per trap should have *14(,000) +/- 3(,000)* soybean plants / hectare; ~95% of the time plots with 5.5 slugs per trap should have *14(,000) +/- 6(,000)* soybean plants / hectare.
 
-Don't worry too much if this idea isn't immediately clear! We will follow up on this random element on day 2 of the lab, seeing how increasing it or decreasing it changes our analysis. For now, we will set our standard deviation at 3.
+Don't worry too much if this idea isn't immediately clear! We will follow up on this random element on day 2 of the lab, seeing how increasing it or decreasing it may change the outcome and our analysis. For now, we will set our standard deviation at 3.
 
 ```{r}
 # specify precision (how much does the response vary irrespective of the association)
 sd <- 3 # standard deviation # units are in 10,000 plants / hectare
 ```
 
-Now that we have defined all of the elements of our imaginary system we are ready to simulate some outcomes. We will simply combine the intercept, slope and measurements into a single linear predictor (again recall the *y = a + b(x)* formula). Use the rnorm() function to generate soybean densities including both the linear predictor (intercept, slope and some independent data) and an element of normally distributed random variation.
+Now that we have defined all of the elements of our imaginary system we are ready to simulate some outcomes. We will combine the intercept, slope and slug count measurements into a linear predictor (again recall the *y = a + b(x)* formula). Use the rnorm() function to generate soybean densities including both the linear predictor (intercept, slope and some independent data) and an element of normally distributed random variation.
+
+If you wish to reproduce all outputs exactly as those generated by the TA you will need to initialize a random number generator and then run all code in sequence. It's ok if you you don't use the random number initialization, just be aware that your plots and model outputs won't be fully identical to those produced below. 
 
 ```{r}
+# initialize random number generator
+set.seed(19) 
+
 # use rnorm() to simulate soybean plant densities 
 # for "n" plots with 2 to 9 "slugs_per_trap slug" 
 # an effect size of "slope"
@@ -199,7 +194,7 @@ plot(x = mydata$slugs_per_trap, # independent variable
 
 **QUESTION 3: Which axis in your figure describes the variation in the independent variable? Which axis describes the variation in the dependent variable?** 
 
-**QUESTION 4: Look at the general trend in the data. Does the change in soybean plant density associated with increasing slug counts track with your intuition based on the slope value that we used?**
+**QUESTION 4: Based on a visual assessment of the plot, describe the general association between slugs per trap and soybean density. Does this association agree with your intuition based on the input slope value of -2?**
 
 #### Analysis and final visualization
 
@@ -223,8 +218,7 @@ summary(fit1 <- lm(formula = soybean_density ~ slugs_per_trap,
 # (definition)
 (R2 <- summary(fit1)$r.squared)
 ```
-
-Last, we will add predictions on our model estimates. Because we know the true values of the intercept and the slope that underly this slug - soybean association, we can assess the accuracy of our model fitting procedure.
+Last, we will add predictions for the expected mean value of soybean density for any given slugs per trap measurement based on our model estimates. Because we know the true values of the intercept and the slope that underlie the association, we can assess the accuracy of our model fitting procedure.
 
 ```{r}
 # now plot the fit (with confidence intervals)
@@ -236,7 +230,7 @@ min_slugs_observed <- min_slugs_observed
 max_slugs_observed <- max_slugs_observed
 
 # now create some new independent data (slugs_per_trap)
-# ranging from min to max and stepping up by interval
+# ranging from min to max and stepping up by equal intervals
 newdata <- data.frame(slugs_per_trap = seq(
   min_slugs_observed, max_slugs_observed, length.out=nrow(mydata)))
 # View(newdata) # you can view the new data set
@@ -273,11 +267,11 @@ pred <- predict(object=fit1, newdata, interval = 'confidence')
   
   legend("topright", 
          legend = c("expected mean", "model-based estimate for mean", "95% CI"), 
-         pch = "|", col = c("red", "blue", "black"))
+         pch = "|", col = c("red", "black", "blue"))
 }
 ```
 
-**QUESTION 5: What is the estimated intercept and slope? Does the uncertainty around the estimates contain the true values that we used to simulate the data? (Hint: compare the true mean relationship (red dashed line) to the confidence interval (blue dashed lines))**
+**QUESTION 5: What is the estimated intercept and slope? Does the uncertainty around the model-based estimate for the means contain the expected means that we used to simulate the data? (Hint: compare the expected means (red dashed line) to the confidence interval around the model-based estimate for the means (blue dashed lines))**
 
 **QUESTION 6: Why might the estimates given by our lm() call be slightly different from the ones we used to simulate the data?**
 
@@ -294,26 +288,22 @@ pred <- predict(object=fit1, newdata, interval = 'confidence')
 
 ### Day 2 - Part 1: Adjust the simulation settings
 
-First, we will try adjusting the simulation settings. We'll take a look at how this effects the our qualitative and quantitative assessments of the association between slugs and soybeans
+First, we will try adjusting the simulation settings. We'll examine how this effects our qualitative and quantitative assessments of the slug - soybean hypothesis.
 
-#### Download the simulation function
-To make reproduction of the simulation easy, we've wrapped all of the simulation code from Day 1 into a function stored in a .R file. This will allow us to tweak the simulation settings and instantly see the consequences on the data and our analysis. Save the file "simulation_function.R" in your working directory. Make sure you do not change the name of the file.
+#### Download and source the simulation function
 
-#### Direct R towards the simulation function
+*This section will be demonstrated to the class by TA on the projection screen.*
 
-This section will be demonstrated to the class by TA on the projection screen.
-
-source() points the environment to a different file
+To make reproduction of the simulation easy, we've wrapped all of the simulation code from Day 1 into a function stored in an .R file. This will allow us to tweak the simulation settings and instantly see the consequences on the data and our analysis. Save the file "simulation_function.R" in your working directory. Make sure you do not change the name of the file.
 
 The source() function will point your R session towards a file in your directory. Starting the file argument with "./" will place tell R to look in your current working directory.
-
 
 ```{r}
 # the "simulation_function.R" file holds the simulation function.
 source(file="./simulation_function.R")
 ```
 
-To make sure that you are properly connected to the simulation function. Go ahead and recreate the figure that we made as a class by calling the simulate_slugs_and_soybeans() function held in your new file, using the same simulation settings that we used for the simulation in Day 1.
+To make sure that you are properly connected to the simulation function. Go ahead and recreate the figure that we made as a class during the previous lab day by calling the simulate_slugs_and_soybeans() function held in your new file. Use the same simulation inputs that we used for the previous simulation.
 
 ```{r}
 # Now we can just run the following line of code to regenerate our original plot!
@@ -327,7 +317,6 @@ print(paste0("intercept = ", signif(my_simulated_data$estimate_intercept, digits
 print(paste0("slope = ", signif(my_simulated_data$estimate_slope, digits=3)))
 print(paste0("R-squared = ", signif(my_simulated_data$R2,3)))
 ```
-
 #### Reconduct the simulation
 
 Next we will adjust our simulation settings to see how this changes the visual spread of the data that emerge, the results of our statistical analysis and our conclusions about the hypothesis introduced on Day 1. 
@@ -343,26 +332,27 @@ my_simulated_data <- simulate_slugs_and_soybeans(n=12,
 
 print(paste0("intercept = ", signif(my_simulated_data$estimate_intercept, digits=3)))
 print(paste0("slope = ", signif(my_simulated_data$estimate_slope, digits=3)))
+print(paste0("R-squared = ", signif(my_simulated_data$R2,3)))
 ```
 
-**QUESTION 8: Describe your visual interpretation of how the data and association changed after altering the input intercept and slope. Is the true relationship (red line) still captured within the confidence interval associated with your statistical model's estimates for the intercept and slope (blue lines). Do the results of your analysis still support the hypothesis that slugs destroy soybean plants? Copy and paste the plot WITH THE SIMULATION PARAMETER VALUES THAT YOU CHOSE at the end of your response to this question**
+**QUESTION 8: Describe your visual interpretation of how the data and association changed after altering the input intercept and slope (comparing with the plot generated with intercept=25 and slope =-2). Is the true relationship (red line) still captured within the confidence interval associated with your statistical model's estimates for the intercept and slope (blue lines). Do the results of your analysis still support the hypothesis that slugs destroy soybean plants? COPY AND PASTE YOUR PLOT at the end of your response to this question**
 
-Now return to our original intercept and slope values and then decrease the precision (increase the standard deviation) of our experiment. Change the sd from 3 to 5 and rerun the simulation 1 time (n_reps=1).
+Now return to our original intercept and slope values and then decrease the precision (increase the standard deviation) of our experiment. Change the sd from 3 to 6 and rerun the simulation 1 time (n_reps=1).
 
 ```{r}
 set.seed(19)
 my_simulated_data <- simulate_slugs_and_soybeans(n=12, 
                                    min_slugs_observed=2, max_slugs_observed=9, 
-                                   intercept=25, slope=-2, sd=5,
+                                   intercept=25, slope=-2, sd=6,
                                    n_reps = 1)
 
 print(paste0("intercept = ", signif(my_simulated_data$estimate_intercept, digits=3)))
 print(paste0("slope = ", signif(my_simulated_data$estimate_slope, digits=3)))
 ```
 
-**QUESTION 9: Describe your visual interpretation of how the data and association changed after altering the precision (compared to the simulation with intercept=25, slope=-2 and sd=3). Is the true relationship (red line) still captured within the bounds of the confidence interval associated with your statistical model's estimates for the intercept and slope (blue lines). Do the results of your analysis still support the hypothesis? Copy and paste your PLOT WITH THE SIMULATION PARAMETER VALUES THAT YOU CHOSE at the end of your response to this question**
+**QUESTION 9: Describe your visual interpretation of how the data and association changed after altering the precision (compared to the simulation with sd=3). Is the true relationship (red line) still captured within the bounds of the confidence interval associated with your statistical model's estimates for the intercept and slope (blue lines). Do the results of your analysis still support the hypothesis? COPY AND PASTE YOUR PLOT at the end of your response to this question**
 
-Let's imagine we could conduct the experiment 100 times with higher precision(sd=3) and 100 times (n_reps=100) with lower precision (sd=5). When n_reps is greater than 1, the simulation function will no longer reproduce a plot of data for a single experiment, because we are simulating multiple experiments! Instead, the function will return a plot showing the distribution of estimates for the intercept
+Let's imagine we could conduct the experiment 100 times with higher precision(sd=3) and 100 times (n_reps=100) with lower precision (sd=6). When n_reps is greater than 1, the simulation function will no longer reproduce a plot of data for a single experiment, because we are simulating multiple experiments! Instead, the function will return a plot showing the distribution of estimates for the intercept
 
 ```{r}
 # Now we can just run the following line of code to regenerate our original plot!
@@ -370,16 +360,16 @@ set.seed(19)
 my_simulated_data <- simulate_slugs_and_soybeans(n=12, 
                                    min_slugs_observed=2, max_slugs_observed=9, 
                                    intercept=25, slope=-2, sd=3,
-                                   n_reps = 50)
+                                   n_reps = 100)
 
 my_simulated_data <- simulate_slugs_and_soybeans(n=12, 
                                    min_slugs_observed=2, max_slugs_observed=9, 
-                                   intercept=25, slope=-2, sd=5,
-                                   n_reps = 50)
+                                   intercept=25, slope=-2, sd=6,
+                                   n_reps = 100)
 ```
 
 
-**QUESTION 10: Compare the intercept estimates as well as the slope estimates for when sd=3 versus when sd=5. Which set of simulations tends to return estimates for the intercept and slope that are closer to the true values of the intercept and slope used to simulate the data? (Hint: look at how spread out the estimates are around the true value)** 
+**QUESTION 10: Compare the intercept estimates as well as the slope estimates for when sd=3 versus when sd=6. Which set of simulations tends to return estimates for the intercept and slope that are closer to the true values of the intercept and slope used to simulate the data? (Hint: look at how spread out the estimates are around the true value)** 
 
 Finally, let's adjust the sample size used in our simulation. Say we had the opportunity to measure slugs and soybean plant density in 100 field plots rather than only in 12:
 
@@ -389,25 +379,24 @@ set.seed(19)
 my_simulated_data <- simulate_slugs_and_soybeans(n=12, 
                                    min_slugs_observed=2, max_slugs_observed=9, 
                                    intercept=25, slope=-2, sd=3,
-                                   n_reps = 50)
+                                   n_reps = 100)
 
 my_simulated_data <- simulate_slugs_and_soybeans(n=100, 
                                    min_slugs_observed=2, max_slugs_observed=9, 
                                    intercept=25, slope=-2, sd=3,
-                                   n_reps = 50)
+                                   n_reps = 100)
 ```
 
 **QUESTION 11: Rerun the previous comparison, but replace n=100 with a sample size of your choice. It could be smaller or larger than Douglas et al sample size of 12! Your choice should be a whole integer number. Compare the intercept estimates as well as the slope estimates for when n=12 versus when n=(your choice). Which set of simulations tends to return estimates for the intercept and slope that are closer to the true values of the intercept and slope used to simulate the data? (Hint: look at how spread out the estimates are around the true value). INCLUDE YOUR PLOTS IN YOUR RESPONSE SO THAT I CAN SEE WHAT SAMPLE SIZE YOU CHOSE** 
 
 ### Day 2 - Part 2: Visualize and analyze some collected data
 
-Suppose know that you have a good idea of your system and what kind of data would support your hypothesis, you design and conduct a real field experiment measuring slugs per trap and soybean. 
+Imagine that now that you have a good idea of your system and what kind of data would support or fail to support your hypothesis, you designed and conducted a real field experiment measuring slugs per trap and soybean. 
 
-You've already entered your data into a .csv file using excel. 
-
-Let's first get a summary of the data
+Congratulation, after a long summer of data collection the numbers are in! You've neatly organized all of your slug and soybean data into a .csv spreadsheet. The .csv is available in Canvas, save the file into your working directory folder. Once you've got this on your personal computer, read the spreadsheet into our R session and first get a summary of those data.
 
 ```{r}
+# read in the spreadsheet (after saving it in your working directory folder)
 my_real_data <- read.csv("./new_slug_and_soybean_data.csv")
 
 # view the data
@@ -423,7 +412,7 @@ mean(my_real_data$slugs_per_trap)
 mean(my_real_data$soybean_density)
 ```
 
-Finally, we will repeat our analysis that we conducted on the simulated data to determine if there is really any association in our "real" data. 
+Finally, repeat the analysis that we conducted on the simulated data to determine the association in our "real" data. 
 
 ```{r}
 # fit a linear regression model to our data
@@ -433,20 +422,17 @@ summary(fit2 <- lm(formula = soybean_density ~ slugs_per_trap,
 
 # save important outputs
 # intercept term
-(estimate_intercept <- summary(fit1)$coefficients[1,1])
+(estimate_intercept <- summary(fit2)$coefficients[1,1])
 # effect of slug increase
-(estimate_slope <- summary(fit1)$coefficients[2,1])
-
-# We can also extract the R-squared value
-# (definition)
-(R2 <- summary(fit1)$r.squared)
+(estimate_slope <- summary(fit2)$coefficients[2,1])
 
 # now plot the fit (with confidence intervals)
 
 # first we need to create some new data
 # we will make predictions for the mean and confidence across the same range 
 # of slugs that we "observed" in our simulation
-# predict the values for every slug_interval slugs added
+min_slugs_observed <- floor(min(my_real_data$slugs_per_trap)) # round down 
+max_slugs_observed <- ceiling(max(my_real_data$slugs_per_trap)) # round up
 
 # now create some new independent data (slugs_per_trap)
 # ranging from min to max and stepping up by interval
@@ -479,6 +465,10 @@ pred2 <- predict(object=fit2, newdata2, interval = 'confidence')
   # Plot the 95% CI for the mean response across range of slugs per trap
   lines(pred2[,2] ~ newdata2$slugs_per_trap, col = 'blue', lty = 2, lwd = 2)
   lines(pred2[,3] ~ newdata2$slugs_per_trap, col = 'blue', lty = 2, lwd = 2)
+  
+  legend("topright", 
+         legend = c("model-based estimate for mean", "95% CI"), 
+         pch = "|", col = c("black", "blue"))
 
 }
 
@@ -490,7 +480,6 @@ pred2 <- predict(object=fit2, newdata2, interval = 'confidence')
 
 **QUESTION 14: Do the data support the hypothesis that slugs consume soybean seedlings/plants?**
 
-
 \begin{center}
-------------- END DAY 1 -------------
+------------- END DAY 2 -------------
 \end{center}
