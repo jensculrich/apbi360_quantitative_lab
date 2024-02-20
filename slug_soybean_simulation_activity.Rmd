@@ -149,7 +149,8 @@ Assuming normally distributed random variation (bell-curve shaped variation), th
 Don't worry too much if this idea isn't immediately clear! We will follow up on this random element on day 2 of the lab, seeing how increasing it or decreasing it may change the outcome and our analysis. For now, we will set our standard deviation at 3.
 
 ```{r}
-# specify precision (how much does the response vary irrespective of the association)
+# specify precision 
+# (how much does the response vary irrespective of the association)
 sd <- 3 # standard deviation # units are in 10,000 plants / hectare
 ```
 
@@ -183,7 +184,8 @@ Before we quantitatively analyze patterns in our simulated data set, let's plot 
 # create a plot using base R plotting tools
 plot(x = mydata$slugs_per_trap, # independent variable
      y = mydata$soybean_density, # dependent variable
-     cex = 1.75, pch = 21, bg = 'gray', # size, shape, and colour of the data points
+     # size, shape, and colour of the data points
+     cex = 1.75, pch = 21, bg = 'gray', 
      xlab = "Slugs (#/trap)", # x-axis title
      ylab = "Soybean plants (10,000/ha)", # y-axis title
      frame = FALSE, # remove frame
@@ -236,7 +238,8 @@ newdata <- data.frame(slugs_per_trap = seq(
 # View(newdata) # you can view the new data set
 
 # now predict the expected outcome for each value of slugs
-# What is the expected soybean density of a plot given a particular slug density? 
+# What is the expected soybean density of a plot 
+# given a particular slug density? 
 pred <- predict(object=fit1, newdata, interval = 'confidence')
 
 # create a plot using base R
@@ -244,7 +247,8 @@ pred <- predict(object=fit1, newdata, interval = 'confidence')
 {
   plot(x = mydata$slugs_per_trap, # independent variable
      y = mydata$soybean_density, # dependent variable
-     cex = 1.75, pch = 21, bg = 'gray', # size, shape, and colour of the data points
+     # size, shape, and colour of the data points
+     cex = 1.75, pch = 21, bg = 'gray', 
      xlab = "Slugs (#/trap)", # x-axis title
      ylab = "Soybean plants (10,000/ha)", # y-axis title
      frame = FALSE, # remove frame
@@ -313,7 +317,8 @@ my_simulated_data <- simulate_slugs_and_soybeans(n=12,
                                    intercept=25, slope=-2, sd=3,
                                    n_reps=1)
 
-print(paste0("intercept = ", signif(my_simulated_data$estimate_intercept, digits=3)))
+print(paste0("intercept = ", signif(
+  my_simulated_data$estimate_intercept, digits=3)))
 print(paste0("slope = ", signif(my_simulated_data$estimate_slope, digits=3)))
 print(paste0("R-squared = ", signif(my_simulated_data$R2,3)))
 ```
@@ -330,7 +335,8 @@ my_simulated_data <- simulate_slugs_and_soybeans(n=12,
                                    intercept=10, slope=1, sd=3,
                                    n_reps=1)
 
-print(paste0("intercept = ", signif(my_simulated_data$estimate_intercept, digits=3)))
+print(paste0("intercept = ", signif(
+  my_simulated_data$estimate_intercept, digits=3)))
 print(paste0("slope = ", signif(my_simulated_data$estimate_slope, digits=3)))
 print(paste0("R-squared = ", signif(my_simulated_data$R2,3)))
 ```
