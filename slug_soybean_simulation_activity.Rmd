@@ -21,7 +21,7 @@ Example concepts taken from:
 
 ### Day 1:
 
-We will begin by ensuring that R was properly installed and then famaliarize ourselves with an R environment.
+We will begin by ensuring that R was properly installed and then familiarize ourselves with an R environment.
 
 Next, we will simulate samples of slug and soybean densities based on a hypothesized effect of slug herbivory on soybean plant survival.
 
@@ -80,9 +80,9 @@ rm(new_object)
 
 #### Introduction 
 
-Suppose we wanted to test the sub-hypothesis presented by Douglas et al. 2015: slugs eat (destroy) soybean seedlings thereby reducing soybean plant density. We might test this hypothesis by collecting data on the number of slugs and the density of soybean plants in a sample of soybean plots, predicting a negative association between slug counts and soybean plant density.
+Suppose we wanted to test the idea presented by Douglas et al. 2015: slugs eat (destroy) soybean seedlings thereby reducing soybean plant density. We might test this by collecting data on the number of slugs and the density of soybean plants in a sample of soybean plots, predicting a negative association between slug counts and soybean plant density.
 
-Douglas et al. indeed found a negative association, supporting the hypothesis (see figure 3c below). We will recreate this experiment ignoring the additional complexity of variation in neonicotinoid pesticides applied to sample plots. Douglas et al. used neonicotinoids to generate variation in slug densities. Here we might imagine a scenario where slug densities vary naturally among soybean plots.
+Douglas et al. found a negative association between slug count and soybean plant establishment, supporting the idea that slugs eat soybean seedlings (see figure 3c below). We will recreate this experiment ignoring the additional complexity of variation in neonicotinoid pesticides applied to sample plots. Douglas et al. used neonicotinoids to generate variation in slug densities. Here we might imagine a scenario where slug densities vary naturally among soybean plots.
 
 Note to TA: As a class we will look at the fig 3c and identify the intercept, slope and random variation (precision) around the linear predictor. 
 
@@ -393,7 +393,7 @@ my_simulated_data <- simulate_slugs_and_soybeans(n=100,
 
 Imagine that now that you have a good idea of your system and what kind of data would support or fail to support your hypothesis, you designed and conducted a real field experiment measuring slugs per trap and soybean. 
 
-Congratulation, after a long summer of data collection the numbers are in! You've neatly organized all of your slug and soybean data into a .csv spreadsheet. The .csv is available in Canvas, save the file into your working directory folder. Once you've got this on your personal computer, read the spreadsheet into our R session and first get a summary of those data.
+Congratulations! After a long summer of data collection the numbers are in! You've neatly organized all of your slug and soybean data into a .csv spreadsheet. The .csv is available in Canvas, save the file into your working directory folder. Once you've got this on your personal computer, read the spreadsheet into our R session and first get a summary of those data.
 
 ```{r}
 # read in the spreadsheet (after saving it in your working directory folder)
