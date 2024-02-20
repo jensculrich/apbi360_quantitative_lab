@@ -352,7 +352,8 @@ my_simulated_data <- simulate_slugs_and_soybeans(n=12,
                                    intercept=25, slope=-2, sd=6,
                                    n_reps = 1)
 
-print(paste0("intercept = ", signif(my_simulated_data$estimate_intercept, digits=3)))
+print(paste0("intercept = ", signif(
+  my_simulated_data$estimate_intercept, digits=3)))
 print(paste0("slope = ", signif(my_simulated_data$estimate_slope, digits=3)))
 ```
 
