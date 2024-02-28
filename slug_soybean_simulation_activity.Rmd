@@ -187,6 +187,8 @@ Before we quantitatively analyze patterns in our simulated data set, let's plot 
 
 ```{r}
 # create a plot using base R plotting tools
+par(mar = c(2, 5, 2, 5)) # Set the margin on the sides to 5
+
 plot(x = mydata$slugs_per_trap, # independent variable
      y = mydata$soybean_density, # dependent variable
      # size, shape, and colour of the data points
@@ -246,6 +248,8 @@ pred <- predict(object=fit1, newdata, interval = 'confidence')
 # create a plot using base R
 # plot our simulated data
 {
+  par(mar = c(2, 5, 2, 5)) # Set the margin on the sides to 5
+  
   plot(x = mydata$slugs_per_trap, # independent variable
      y = mydata$soybean_density, # dependent variable
      # size, shape, and colour of the data points
@@ -460,6 +464,8 @@ pred2 <- predict(object=fit2, newdata2, interval = 'confidence')
 # create a plot using base R
 # plot our simulated data
 {
+  par(mar = c(2, 5, 2, 5)) # Set the margin on the sides to 5
+  
   plot(x = my_real_data$slugs_per_trap, # independent variable
      y = my_real_data$soybean_density, # dependent variable
      cex = 1.75, pch = 21, bg = 'gray', # size, shape, and colour of the data points

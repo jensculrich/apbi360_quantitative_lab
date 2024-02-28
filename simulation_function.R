@@ -121,7 +121,7 @@ simulate_slugs_and_soybeans <- function(n, min_slugs_observed, max_slugs_observe
     # What is the mean soybean density of a plot given a particular slug density? 
     pred <- as.matrix(predict(fit1, newdata, interval = 'confidence'))
     
-    par(mfrow=c(1,1))
+    par(mfrow=c(1,1), mar = c(2, 5, 2, 5)) # Go back to 1 fig column; set the margin on the sides to 5
     
     # create a plot using classic r tools
     # plot our simulated data
@@ -132,7 +132,7 @@ simulate_slugs_and_soybeans <- function(n, min_slugs_observed, max_slugs_observe
          ylab = "Soybean plants (10,000/ha)", 
          frame = FALSE,
          xlim = c(min_slugs_observed, max_slugs_observed),
-         ylim = c(0, 50),
+         ylim = c(0, (max(mydata$soybean_density)+5)),
          main = paste0("simulation experiment with intercept = ", intercept, 
                        ",\nslope = ", slope, " and sd = ", sd),
          cex.main = 0.8
