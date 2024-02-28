@@ -66,7 +66,7 @@ print("slugs eat soybeans")
 2 + 2
 ```
 
-Alternatively, you can create an .R file that holds lines of R script. You can select and then press "ctrl+enter" to execute one or more lines of code. This is a preferable way of interacting with R because it will allow you to save multiple lines of code and re-execute them whenever you like. Try creating a .R file in your working directory and then paste/type the previous code chunk into your new .R file. Try calling the print() and addition operations using the select and "ctrl+enter" method. 
+Alternatively, you can create an .R file that holds lines of R script. You can select and then press "ctrl+enter" to execute one or more lines of code. This is a preferable way of interacting with R because it will allow you to save multiple lines of code and re-execute them whenever you like. Try creating a .R file in your working directory and then paste/type the previous code chunk into your new .R file. Try calling the print() and addition operations from before using the select and "ctrl+enter" method. 
 
 We might store the result of some command as a new object, say "new_object". After entering the first line of code, see if you can find the this new object and it's value within your programming environment. You should see it listed in the top right window pane if you are using RStudio. You can remove objects from the environment using the rm() command.
 
@@ -300,7 +300,28 @@ pred <- predict(object=fit1, newdata, interval = 'confidence')
 
 ## Day 2 - Part 1: Adjust the simulation settings
 
-First, we will try adjusting the simulation settings. We'll examine how this effects our qualitative and quantitative assessments of the slug - soybean hypothesis.
+We will try adjusting the simulation settings. We'll examine how this effects our qualitative and quantitative assessments of the slug - soybean hypothesis.
+
+### Specify your working directory
+
+*This section will be demonstrated to the class by TA on the projection screen.*
+
+The following activities will require you to interact with another .R file and, later, a .csv spreadsheet of new data. In order to interact with these other files you will need to set them in your working directory so that your computer will be able to find them.
+
+Make a new folder somewhere convenient on your computer. Place your working .R file in this folder. Then download the simulation_function.R and the new_slug_and_soybean.csv file into this same folder. Specify this as your working directory:
+
+```{r, results="hide"}
+getwd() # get current working directory
+
+# setwd("C:/Users/my_name/Documents/R/APBI360") # set working directory
+# ^ your working directory may look something like what I've pasted above.
+# ^ replace the above with the path that you are using on your own computer.
+# ^ remove the hastag at the front of the above line.
+# ^ make sure that you use forward slashes.
+
+list.files() # print out the files in your working directory.
+```
+
 
 ### Download and source the simulation function
 
