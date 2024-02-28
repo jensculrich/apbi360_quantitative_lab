@@ -318,7 +318,8 @@ source(file="./simulation_function.R")
 To make sure that you are properly connected to the simulation function. Go ahead and recreate the figure that we made as a class during the previous lab day by calling the simulate_slugs_and_soybeans() function held in your new file. Use the same simulation inputs that we used for the previous simulation.
 
 ```{r, results="hide", fig.keep = "none"}
-# Now we can just run the following line of code to regenerate our original plot!
+# Now we can just run the following line of code to resimulate
+# our original data and regenerate our original plot!
 set.seed(19)
 my_simulated_data <- simulate_slugs_and_soybeans(n=12, 
                                    min_slugs_observed=2, max_slugs_observed=9, 
@@ -337,6 +338,7 @@ Next we will adjust our simulation settings to see how this changes the visual s
 Using the simulation function, alter the intercept and/or the slope. For example, I've chosen a new intercept of 10 and a slope of 1. Feel free to choose any values that you think you might realistically observe in a slug - soybean experiment! Rerun the simulation 1 time (n_reps=1).
 
 ```{r, results="hide"}
+# simulate data with a new intercept and/or slope
 my_simulated_data <- simulate_slugs_and_soybeans(n=12, 
                                    min_slugs_observed=2, max_slugs_observed=9, 
                                    intercept=10, slope=1, sd=3,
@@ -352,6 +354,7 @@ print(paste0("slope = ", signif(my_simulated_data$estimate_slope, digits=3)))
 Now return to our original intercept and slope values and then decrease the precision (increase the standard deviation) of our experiment. Change the sd from 3 to 6 and rerun the simulation 1 time (n_reps=1).
 
 ```{r, results="hide"}
+# simulate data with a new sd
 my_simulated_data <- simulate_slugs_and_soybeans(n=12, 
                                    min_slugs_observed=2, max_slugs_observed=9, 
                                    intercept=25, slope=-2, sd=6,
@@ -367,13 +370,13 @@ print(paste0("slope = ", signif(my_simulated_data$estimate_slope, digits=3)))
 Let's imagine we could conduct the experiment 100 times with higher precision(sd=3) and 100 times (n_reps=100) with lower precision (sd=6). When n_reps is greater than 1, the simulation function will no longer reproduce a plot of data for a single experiment, because we are simulating multiple experiments! Instead, the function will return a plot showing the distribution of estimates for the intercept
 
 ```{r, results="hide", fig.keep = "none"}
-# Now we can just run the following line of code to regenerate our original plot!
+# compare parameter estimates for relatively low sd
 set.seed(19)
 my_simulated_data <- simulate_slugs_and_soybeans(n=12, 
                                    min_slugs_observed=2, max_slugs_observed=9, 
                                    intercept=25, slope=-2, sd=3,
                                    n_reps = 100)
-
+# versus for relatively high sd
 my_simulated_data <- simulate_slugs_and_soybeans(n=12, 
                                    min_slugs_observed=2, max_slugs_observed=9, 
                                    intercept=25, slope=-2, sd=6,
@@ -386,13 +389,12 @@ my_simulated_data <- simulate_slugs_and_soybeans(n=12,
 Finally, let's adjust the sample size used in our simulation. Say we had the opportunity to measure slugs and soybean plant density in 100 field plots rather than only in 12:
 
 ```{r, results="hide", fig.keep = "none"}
-# Now we can just run the following line of code to regenerate our original plot!
-set.seed(19)
+# compare parameter estimates for relatively low sample size
 my_simulated_data <- simulate_slugs_and_soybeans(n=12, 
                                    min_slugs_observed=2, max_slugs_observed=9, 
                                    intercept=25, slope=-2, sd=3,
                                    n_reps = 100)
-
+# versus relatively high sample size
 my_simulated_data <- simulate_slugs_and_soybeans(n=100, 
                                    min_slugs_observed=2, max_slugs_observed=9, 
                                    intercept=25, slope=-2, sd=3,
@@ -427,6 +429,7 @@ mean(my_real_data$slugs_per_trap)
 # mean soybean density
 mean(my_real_data$soybean_density)
 ```
+
 ### Apply the linear regression analysis to the new data
 
 Finally, repeat the analysis that we conducted on the simulated data to determine the association in our "real" data. 
