@@ -72,6 +72,8 @@ simulate_slugs_and_soybeans <- function(n, min_slugs_observed, max_slugs_observe
     sd_intercept = sd(intercepts)
     sd_slope = sd(slopes)
     
+    dev.off()
+    
   } else {
     
     # simulate some slug trap data (independent variable), for n plots, ranging from lows to highs seen in the field experiment
@@ -121,7 +123,7 @@ simulate_slugs_and_soybeans <- function(n, min_slugs_observed, max_slugs_observe
     # What is the mean soybean density of a plot given a particular slug density? 
     pred <- as.matrix(predict(fit1, newdata, interval = 'confidence'))
     
-    par(mfrow=c(1,1), mar = c(2, 5, 2, 5)) # Go back to 1 fig column; set the margin on the sides to 5
+    par(mfrow=c(1,1), mar = c(5, 5, 2, 5)) # Go back to 1 fig column; set the margin on the sides to 5
     
     # create a plot using classic r tools
     # plot our simulated data
