@@ -56,6 +56,7 @@ Following the completion of the lab, students will be able to:
 ## Day 1 - Part 1: Familiarize yourself with an R environment
 
 *This section will be demonstrated to the class by TA on the projection screen.*
+*First, the TA should orient you to the 4 main display panels in your RStudio environment.*
 
 Before we start with the activity, we will execute a few commands in R to ensure that R is installed properly and that we can navigate within an R environment. 
 
@@ -65,9 +66,6 @@ After opening your R environment, R commands can be executed in two different wa
 print("slugs eat soybeans")
 2 + 2
 ```
-
-Alternatively, you can create an .R file that holds lines of R script. You can select and then press "ctrl+enter" to execute one or more lines of code. This is a preferable way of interacting with R because it will allow you to save multiple lines of code and re-execute them whenever you like. Try creating a .R file in your working directory and then paste/type the previous code chunk into your new .R file. Try calling the print() and addition operations from before using the select and "ctrl+enter" method. 
-
 We might store the result of some command as a new object, say "new_object". After entering the first line of code, see if you can find the this new object and it's value within your programming environment. You should see it listed in the top right window pane if you are using RStudio. You can remove objects from the environment using the rm() command.
 
 ```{r}
@@ -75,6 +73,25 @@ new_object <- 2 + 2
 new_object
 rm(new_object)
 ```
+
+*This section will be demonstrated to the class by TA on the projection screen.*
+
+Alternatively, you can create an .R file that holds lines of R script. This is a preferable way of interacting with R because it will allow you to save multiple lines of code and re-execute them whenever you like. For example, when we come back to class on Day 2, you can rerun your saved R code rather than retyping everything.
+
+Before creating a .R file we will define a working directory - the folder on your computer where all of the files for this project will be stored. Make a folder somewhere on your computer that is accessible for you. Give the folder an informative name, e.g., "apbi_360_R_activity". To set the working directory either select the gear icon menu in the bottom right panel of RStudio, then click on "Set as working directory". Using RStudio's interface is the easiest way to do this. Alternatively you can manually enter the working directory:
+
+```{r, results="hide"}
+# To manually enter the working directory, use the setwd() function:
+# setwd("./Documents/apbi_360_R_activity") 
+# replace "./Documents/apbi_360_R_activity" with the directory on your computer
+```
+
+Again, the TA will show you how to set the working directory. Please ask for help if you have difficulties.
+
+Now that we've set up a folder where we want to store our materials for the lab, let's try creating a .R file. Click on the new file icon to make a new .R file. If you've navigated to your working directory folder in the bottom right hand corner of your RStudio panel, you should see this new file pop up in that folder. Confirm that the file is there and give it an informative name, e.g., "apbi360_R_activity.R".
+
+Now paste/type the previous print or calculation code chunks into your new .R file. To run the commands, highlight all of the lines of code that you would like to run and then press "ctrl+enter" on your keyboard. You can also place your cursor anywhere on any line of code and press "ctrl+enter" to run that line of code.
+
 
 \newpage 
 
@@ -106,6 +123,8 @@ Start by defining the dimensions of the experiment. Let's use a sample size equi
 
 ```{r}
 # specify a sample size (how many plots are included in the field experiment)
+# note that any lines of code beginning with "#" will not be read by R.
+# You can use the "#" symbol to take notes or make some comments about your code.
 n <- 12
 ```
 
@@ -113,9 +132,9 @@ Next we will need to generate some values for our independent variable, the aver
 
 ```{r}
 # specify a minimum number of slugs we might expect to see in a trap 
-min_slugs_observed = 2
+min_slugs_observed <- 2
 # specify a maximum number of slugs we might expect to see in a trap 
-max_slugs_observed = 9
+max_slugs_observed <- 9
 # simulate some slug trap data (independent variable), for n plots, 
 # ranging from minimum to maximum values seen in the field experiment
 slugs_per_trap <- runif(n=n, min=min_slugs_observed, max=max_slugs_observed)
@@ -187,7 +206,7 @@ Before we quantitatively analyze patterns in our simulated data set, let's plot 
 
 ```{r}
 # create a plot using base R plotting tools
-par(mar = c(5, 5, 2, 5)) # Set the margin on the sides to 5
+par(mfrow=c(1,1), mar = c(5, 5, 2, 5)) # Set the margin on the sides to 5
 
 plot(x = mydata$slugs_per_trap, # independent variable
      y = mydata$soybean_density, # dependent variable
@@ -248,7 +267,7 @@ pred <- predict(object=fit1, newdata, interval = 'confidence')
 # create a plot using base R
 # plot our simulated data
 {
-  par(mar = c(5, 5, 2, 5)) # Set the margin on the sides to 5
+  par(mfrow=c(1,1), mar = c(5, 5, 2, 5)) # Set the margin on the sides to 5
   
   plot(x = mydata$slugs_per_trap, # independent variable
      y = mydata$soybean_density, # dependent variable
@@ -308,7 +327,7 @@ We will try adjusting the simulation settings. We'll examine how this effects ou
 
 The following activities will require you to interact with another .R file and, later, a .csv spreadsheet of new data. In order to interact with these other files you will need to set them in your working directory so that your computer will be able to find them.
 
-Make a new folder somewhere convenient on your computer. Place your working .R file in this folder. Then download the simulation_function.R and the new_slug_and_soybean.csv file into this same folder. Specify this as your working directory:
+Download the simulation_function.R and the new_slug_and_soybean.csv file into this same folder that you were using during the previous day. Use getwd() function to confirm that you're computer still recognizes the same working directory. The working directory may have changed if you restarted your computer or opened a different project in RStudio.
 
 ```{r, results="hide"}
 getwd() # get current working directory
@@ -319,7 +338,8 @@ getwd() # get current working directory
 # ^ remove the hastag at the front of the above line.
 # ^ make sure that you use forward slashes.
 
-list.files() # print out the files in your working directory.
+list.files() # print out the files in your working directory. 
+# You should see the simulation function and new data files printed out here
 ```
 
 
@@ -372,7 +392,7 @@ print(paste0("slope = ", signif(my_simulated_data$estimate_slope, digits=3)))
 
 **QUESTION 8: Describe your visual interpretation of how the data and association changed after altering the input intercept and slope (comparing with the plot generated with intercept=25 and slope =-2). Is the true relationship (red line) still captured within the confidence interval associated with your statistical model's estimates for the intercept and slope (blue lines). Do the results of your analysis still support the idea that slugs destroy soybean plants? COPY AND PASTE YOUR PLOT at the end of your response to this question**
 
-Now return to our original intercept and slope values and then decrease the precision (increase the standard deviation) of our experiment. Change the sd from 3 to 6 and rerun the simulation 1 time (n_reps=1).
+Now **re-enter the original intercept and slope values (intercept = 25; slope = -2)**. Now we will vary the precision of our measurements. Decrease the precision (increase the standard deviation) of our experiment. Change the sd from 3 to 6 and rerun the simulation 1 time (n_reps=1).
 
 ```{r, results="hide"}
 # simulate data with a new sd
@@ -407,7 +427,7 @@ my_simulated_data <- simulate_slugs_and_soybeans(n=12,
 
 **QUESTION 10: Compare the intercept estimates as well as the slope estimates for when sd=3 versus when sd=6. Which set of simulations tends to return estimates for the intercept and slope that are closer to the true values of the intercept and slope used to simulate the data? (Hint: look at how spread out the estimates are around the true value)**
 
-Finally, let's adjust the sample size used in our simulation. Say we had the opportunity to measure slugs and soybean plant density in 100 field plots rather than only in 12:
+Finally, let's adjust the sample size used in our simulation. Say we had the opportunity to measure slugs and soybean plant density in 100 field plots rather than only in 12. Make sure to use a consistent standard deviation across the sets of simulations for both small and large sample sizes (e.g., sd = 3).
 
 ```{r, results="hide", fig.keep = "none"}
 # compare parameter estimates for relatively low sample size
@@ -488,7 +508,7 @@ pred2 <- predict(object=fit2, newdata2, interval = 'confidence')
 # create a plot using base R
 # plot our simulated data
 {
-  par(mar = c(5, 5, 2, 5)) # Set the margin on the sides to 5
+  par(mfrow=c(1,1), mar = c(5, 5, 2, 5)) # Set the margin on the sides to 5
   
   plot(x = my_real_data$slugs_per_trap, # independent variable
      y = my_real_data$soybean_density, # dependent variable
@@ -517,7 +537,7 @@ pred2 <- predict(object=fit2, newdata2, interval = 'confidence')
 
 ```
 
-**QUESTION 12: Paste your plot of the data and model predictions. Describe your visual interpretation of the data. Does soybean density tend to increase, decrease or stay the same as slugs per trap increases? Do the soybean plant densities tend to be close to the expected values (mean trend line) given the number of slugs per trap OR do they vary widely?**
+**QUESTION 12: Paste your plot of the data and model predictions. Describe your visual interpretation of the data. Does soybean density tend to increase, decrease or stay the same as slugs per trap increases? Do the soybean plant densities tend to be close to the expected values (mean trend line) given the number of slugs per trap or do they vary widely?**
 
 **QUESTION 13: What are the intercept and slope estimates? What are the ecological meanings of these estimates (what do these estimates tell us about slug and soybean densities)?**
 

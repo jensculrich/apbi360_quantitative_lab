@@ -72,7 +72,6 @@ simulate_slugs_and_soybeans <- function(n, min_slugs_observed, max_slugs_observe
     sd_intercept = sd(intercepts)
     sd_slope = sd(slopes)
     
-    dev.off()
     
   } else {
     
